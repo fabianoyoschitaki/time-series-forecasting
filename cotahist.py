@@ -87,11 +87,13 @@ print 'MAE Moving Average Benchmark', mean_absolute_error(y_pred_ma,y_true)
 #Cria um gráfico dos valores reais, previsões da regressão linear e do modelo utilizando o último valor
 # OPCIONAL - REQUER MATPLOTLIB
 from matplotlib import pyplot as plt
+from matplotlib.pyplot import figure
+figure(num=None, figsize=(10, 6), dpi=80, facecolor='w', edgecolor='k')
 plt.title("Fechamento PETR4 - Diariamente - {} a {}".format(data['Data'][0], data['Data'][data.shape[0]-1]))
 plt.ylabel('Valor Fechamento')
 plt.xlabel(u'Período (Dias)')
 reg_val, = plt.plot(y_pred,color='b',label=u'Linear Regression')
 true_val, = plt.plot(y_true,color='g', label='True Values')
-plt.xlim([0,85])
+plt.xlim([0,data.shape[0]-6])
 plt.legend(handles=[true_val,reg_val])
 plt.show()
