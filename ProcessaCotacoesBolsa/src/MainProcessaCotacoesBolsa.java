@@ -12,7 +12,7 @@ public class MainProcessaCotacoesBolsa {
 			BufferedReader reader = null;
 			BufferedWriter writer = null;
 			try {
-				String processedFile = args[0].toUpperCase().replace(".TXT", "_PROCESSED.CSV");
+				String processedFile = args[0].toUpperCase().replace(".TXT", "_PROCESSED" + (args.length >= 2 ? args[1].toUpperCase() + ".CSV" : ".CSV"));
 				if (processedFile.equals(args[0])) {
 					throw new RuntimeException("Nome de arquivo [" + args[0] + "] é inválido: deve ter extensão");
 				}

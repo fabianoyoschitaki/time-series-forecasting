@@ -16,7 +16,6 @@ def mape(y_pred,y_true):
 #Loading the data
 
 data = pd.read_csv('prime.csv',header=0,index_col=0).sort_index()
-print(data)
 
 x_data = []
 y_data = []
@@ -26,7 +25,6 @@ for d in xrange(6, data.shape[0]):
     
     x = data.iloc[d-6:d].values.ravel()
     y = data.iloc[d].values[0]
-    print "here: ",  data.iloc[d].values[0]
     #print("x:", x, " -> y:", y)
     x_data.append(x)
     y_data.append(y)
@@ -34,6 +32,9 @@ for d in xrange(6, data.shape[0]):
 
 x_data = np.array(x_data)
 y_data = np.array(y_data)
+
+print("x:", x_data[0])
+print("y:", y_data[0])
 
 #Lists to store the predictions of the models
 y_pred = []
