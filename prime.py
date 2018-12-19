@@ -16,25 +16,24 @@ def mape(y_pred,y_true):
 #Loading the data
 
 data = pd.read_csv('prime.csv',header=0,index_col=0).sort_index()
+print(data)
 
 x_data = []
 y_data = []
 
 # Creates a feature matrix with values from previous 6 months
-for d in xrange(6,data.shape[0]):
+for d in xrange(6, data.shape[0]):
     
     x = data.iloc[d-6:d].values.ravel()
     y = data.iloc[d].values[0]
-
+    print "here: ",  data.iloc[d].values[0]
+    #print("x:", x, " -> y:", y)
     x_data.append(x)
     y_data.append(y)
 
 
 x_data = np.array(x_data)
 y_data = np.array(y_data)
-
-
-
 
 #Lists to store the predictions of the models
 y_pred = []

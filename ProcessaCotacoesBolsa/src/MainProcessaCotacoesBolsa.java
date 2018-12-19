@@ -27,14 +27,15 @@ public class MainProcessaCotacoesBolsa {
 				int cont = 0;
 				while (reader.ready()) {
 					line = reader.readLine();
-					cont++;
-					if (cont % 10000 == 0) 
-						System.out.println(cont + " linhas já foram processadas");
-					
 					//Only stock history
 					if (line.startsWith("01")) {
+						cont++;
+						if (cont % 10000 == 0) 
+							System.out.println(cont + " linhas já foram processadas.");
+						
 						//Filters by stock code
-						if (args.length >= 2 && args[1].equals(line.substring(12, 24).trim())) {
+						if (args.length == 1
+						 || args.length >= 2 && args[1].equals(line.substring(12, 24).trim())) {
 							writer.write("\n" + line.substring(0, 2) 
 								+ ";" + line.substring(2, 10)
 								+ ";" + line.substring(10, 12)
@@ -60,8 +61,7 @@ public class MainProcessaCotacoesBolsa {
 								+ ";" + line.substring(210, 217)
 								+ ";" + line.substring(217, 230)
 								+ ";" + line.substring(230, 242)
-								+ ";" + line.substring(242, 245)
-								+ ";" + line.substring(217, 230));
+								+ ";" + line.substring(242, 245));
 						}
 					}
 				}
