@@ -19,8 +19,8 @@ def mape(y_pred,y_true):
 
 
 #Loading the data
-data = pd.read_csv('COTAHIST_A2018_PROCESSED.CSV', delimiter=';')
-print "Data format: {}".format(data.shape)
+data = pd.read_csv('COTAHIST_A2018_PROCESSED_PETR4.CSV', delimiter=';')
+print "PETR4 data: {} linhas e {} colunas".format(data.shape[0], data.shape[1])
 
 x_data = []
 y_data = []
@@ -37,9 +37,6 @@ for d in xrange(6, data.shape[0]):
     
 x_data = np.array(x_data)
 y_data = np.array(y_data)
-
-print(x_data[0])
-print(y_data[0])
 
 #Lists to store the predictions of the models
 y_pred = []
@@ -90,9 +87,9 @@ print 'MAE Moving Average Benchmark', mean_absolute_error(y_pred_ma,y_true)
 #Cria um gráfico dos valores reais, previsões da regressão linear e do modelo utilizando o último valor
 # OPCIONAL - REQUER MATPLOTLIB
 from matplotlib import pyplot as plt
-plt.title('Prime Rate Brazil - Monthly - 2005 to 2014')
-plt.ylabel('Prime Rate')
-plt.xlabel(u'Periods (Months)')
+plt.title("Fechamento PETR4 - Diariamente - {} a {}".format(data['Data'][0], data['Data'][data.shape[0]-1]))
+plt.ylabel('Valor Fechamento')
+plt.xlabel(u'Período (Dias)')
 reg_val, = plt.plot(y_pred,color='b',label=u'Linear Regression')
 true_val, = plt.plot(y_true,color='g', label='True Values')
 plt.xlim([0,85])
