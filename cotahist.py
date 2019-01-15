@@ -12,15 +12,22 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error
 import numpy as np
 import pandas as pd
+import sys
 
 #MAPE calculation function
 def mape(y_pred,y_true):
   return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
-
 #Loading the data
-data = pd.read_csv('COTAHIST_A2018_PROCESSED_PETR4.CSV', delimiter=';')
-print "PETR4 data: {} linhas e {} colunas".format(data.shape[0], data.shape[1])
+if len(sys.argv) < 2:
+	print "Favor informar nome do arquivo CSV! Ex: python cotahist.py COTAHIST_A2018_PROCESSED_PETR4.CSV"
+	exit()
+	
+csv_file = sys.argv[1]
+data = pd.read_csv(csv_file, delimiter=';')
+ticker = data['Ticker'][0].strip()
+
+print "{} data: {} linhas e {} colunas".format(ticker, data.shape[0], data.shape[1])
 
 x_data = []
 y_data = []
@@ -83,17 +90,19 @@ print 'MAE Linear Regression', mean_absolute_error(y_pred,y_true)
 print 'MAE Last Value Benchmark', mean_absolute_error(y_pred_last,y_true)
 print 'MAE Moving Average Benchmark', mean_absolute_error(y_pred_ma,y_true)
 
-
 #Cria um gráfico dos valores reais, previsões da regressão linear e do modelo utilizando o último valor
 # OPCIONAL - REQUER MATPLOTLIB
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import figure
 figure(num=None, figsize=(10, 6), dpi=80, facecolor='w', edgecolor='k')
-plt.title("Fechamento PETR4 - Diariamente - {} a {}".format(data['Data'][0], data['Data'][data.shape[0]-1]))
+plt.title("Fechamento " + ticker + " - Diariamente - {} a {}".format(data['Data'][0], data['Data'][data.shape[0]-1]))
 plt.ylabel('Valor Fechamento')
 plt.xlabel(u'Período (Dias)')
 reg_val, = plt.plot(y_pred,color='b',label=u'Linear Regression')
 true_val, = plt.plot(y_true,color='g', label='True Values')
 plt.xlim([0,data.shape[0]-6])
 plt.legend(handles=[true_val,reg_val])
+plt.savefig('cota_' + ticker + '.png', bbox_inches='tight')
+print '\nArquivo cota_' + ticker + '.png gerado com sucesso!'
 plt.show()
+
